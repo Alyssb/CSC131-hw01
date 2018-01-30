@@ -1,4 +1,4 @@
-import string
+import string # Provides access to string.punctuation
 
 
 def get_concordance_for_file(file_name: str) -> dict:
