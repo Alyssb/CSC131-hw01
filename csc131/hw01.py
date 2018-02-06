@@ -50,9 +50,9 @@ def save_results_in_file(concordance: dict, filename: str) -> bool:
     :param filename: The name of the output file where the results are written.
     :return: True if the file had data written to it, False otherwise.
     """
+    temp = False
     alpha = []
     f=open(filename,"w")
-
     for key in concordance:
         alpha.append(key)
         alpha.sort()
@@ -60,9 +60,7 @@ def save_results_in_file(concordance: dict, filename: str) -> bool:
         word = index
         value = concordance[index]
         f.write(word + ": " + str(value)+"\n")
-
-
+        temp = True
     f.close()
-
     # TODO: Implement me correctly.
-    return False
+    return temp
