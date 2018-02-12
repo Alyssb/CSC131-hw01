@@ -1,6 +1,7 @@
 import string # Provides access to string.punctuation
 
 
+
 def get_concordance_for_file(file_name: str) -> dict:
     """
     This function generates a concordance for the text found in the given file.
@@ -8,9 +9,32 @@ def get_concordance_for_file(file_name: str) -> dict:
     :return: A dictionary representing a concordance for the given file is
     returned.
     """
+    f = open(file_name,"r")
 
+    fresh_dic=dict()
+    data = []
+    while True:
+        line = f.readline().lower()
+        if line=="":
+            break
+        words = line.split()
+        for word in words:
+            data.append(word)
+    r = [u.translate({ord(i): None for i in string.punctuation}) for u in data]
+    r.sort()
+    for index in range(len(r)):
+        q = True
+        word = r[index]
+        for bluh in fresh_dic:
+            if(bluh==word):
+                fresh_dic[bluh]+=1
+                q = False
+        if(q): fresh_dic[word]=1
+
+    fresh_dic.pop('')
+    f.close()
     # TODO: Implement me correctly.
-    return {}
+    return fresh_dic
 
 
 def save_results_in_file(concordance: dict, filename: str) -> bool:
@@ -26,6 +50,17 @@ def save_results_in_file(concordance: dict, filename: str) -> bool:
     :param filename: The name of the output file where the results are written.
     :return: True if the file had data written to it, False otherwise.
     """
-
+    temp = False
+    alpha = []
+    f=open(filename,"w")
+    for key in concordance:
+        alpha.append(key)
+        alpha.sort()
+    for index in alpha:
+        word = index
+        value = concordance[index]
+        f.write(word + ": " + str(value)+"\n")
+        temp = True
+    f.close()
     # TODO: Implement me correctly.
-    return False
+    return temp
